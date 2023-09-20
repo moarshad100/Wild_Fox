@@ -1,0 +1,47 @@
+<div class="grid grid-cols-8 grid-rows-8 gap-0">
+    <div class="col-span-8">        
+      <div class="block w-full p-6 bg-white border border-gray-200 rounded-none shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+          <h5 class="text-center mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Welcome {{user.name}}</h5>
+      </div>
+    </div>
+        {{log user}}
+    <div class="col-span-8 row-span-6 row-start-3 overflow-y-auto">
+      {{#if user.reviews.length}}
+        <div class="block w-full p-6 bg-white border border-gray-200 rounded-none shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+            <h5 class="text-left mb-2 text-2xl tracking-tight text-gray-900 dark:text-white">Your reviews:</h5>
+        </div>
+        {{#each user.reviews as |review|}}
+            <div class="block w-full p-6 bg-white border border-gray-200 rounded-none shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"><a href="/api/items/{{review.item.id}}">{{review.item.name}}</a></h5>
+                <p class="font-normal text-gray-700 dark:text-gray-400">{{review.text}}</p>
+                {{> ranking-stars review}}
+            </div>
+            <form class="flex-wrap pb-14 border border-gray-200 dark:bg-gray-800 dark:border-gray-700" data-form="{{review.id}}">
+                <div class="py-2 px-4 mb-4 bg-white rounded-none rounded-none border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+                    <label for="review" class="sr-only">Your review</label>
+                    <textarea rows="6" name="review" id="review"
+                        class="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800"
+                        placeholder="Update your review..." data-text="{{review.id}}"></textarea>
+                    <div>
+                        <label for="rating" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select a rating</label>
+                        <select name="rating" id="rating" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" data-rating="{{review.id}}">
+                        <option selected>Choose between 1 to 5</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="button" class="delete-button float-right mr-6 text-white bg-blue-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800" data-id="{{review.id}}">Delete</button>
+                <button type="button" class="edit-button float-right mr-6 text-white bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Edit</button>
+            </form>
+        {{/each}}
+      </div>
+      {{/if}}
+    </div>
+</div>
+
+
+<script src="./js/dashboard.js"></script>
